@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Form from '../common/Form'
 import useForm from '../hooks/useForm'
+import useGlobalContext from '../hooks/useGlobalContext'
 import { LoginWrapper } from '../styles'
+import { signUp } from '../services/axios'
 
 const SignUp = () => {
+    const navigate = useNavigate()
+    const { setUser } = useGlobalContext()
     const [form, handleForm] = useForm({
         name: '',
         email: '',
@@ -11,9 +15,22 @@ const SignUp = () => {
         passwordAuth: ''
     })
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(form)
+
+        if (form.password !== form.passwordAuth){
+            // Todo: create a custom Alert component for this
+            alert('Password does not match')
+            return
+        }
+
+        try {
+            await signUp({...form})
+            navigate('/signin')
+            
+        } catch (error) {
+            alert(error.response.data)
+        }
     }
 
   return (
