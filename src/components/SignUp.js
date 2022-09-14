@@ -1,13 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Form from '../common/Form'
 import useForm from '../hooks/useForm'
-import useGlobalContext from '../hooks/useGlobalContext'
 import { LoginWrapper } from '../styles'
 import { signUp } from '../services/axios'
 
 const SignUp = () => {
     const navigate = useNavigate()
-    const { setUser } = useGlobalContext()
     const [form, handleForm] = useForm({
         name: '',
         email: '',
