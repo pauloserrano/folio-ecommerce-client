@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useForm = ({ initial={} }) => {
+const useForm = (initial={}) => {
     const [form, setForm] = useState(initial)
 
     const handleForm = ({ target: { value, name }}) => {
