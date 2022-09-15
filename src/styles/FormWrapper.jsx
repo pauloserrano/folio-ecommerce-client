@@ -15,7 +15,6 @@ const FormWrapper = styled.form`
         border: 1px solid #171717;
         border-radius: 5px;
         color: #171717;
-        text-transform: uppercase;
     }
 
     input:last-of-type{
@@ -34,6 +33,7 @@ const FormWrapper = styled.form`
         font-size: 14px;
         background-color: #171717;
         color: #fff;
+        text-transform: uppercase;
         cursor: pointer;
     }
 `
