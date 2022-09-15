@@ -13,7 +13,7 @@ const signUp = ({ name, email, password }) => {
 }
 
 const individualProduct = ({ id }) => {
-    return api.get(`/product/${id}`);
+    return api.get(`/products/${id}`);
 }
 
 export { signIn, signUp, individualProduct };
