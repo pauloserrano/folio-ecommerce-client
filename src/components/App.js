@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalContextProvider } from "../context/GlobalContext";
 import { GlobalStyle } from "../styles";
+import Home from "./Home";
 
 const App = () => {
   return (
@@ -8,7 +9,7 @@ const App = () => {
       <GlobalStyle />
       <GlobalContextProvider>
           <Routes>
-            <Route path="/" element={<>Home</>}></Route>
+            <Route path="/" element={<Home />}></Route>
             <Route path="/signin" element={<></>}></Route>
             <Route path="/signup" element={<></>}></Route>
             <Route path="/checkout" element={<></>}></Route>

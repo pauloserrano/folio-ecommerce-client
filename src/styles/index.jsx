@@ -1,3 +1,4 @@
 import GlobalStyle from "./GlobalStyle";
+import HomeWrapper from "./HomeWrapper";
 
-export { GlobalStyle }
+export { GlobalStyle, HomeWrapper }
