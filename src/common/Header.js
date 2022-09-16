@@ -4,7 +4,7 @@ import { RiMenu2Line as Menu } from "react-icons/ri"
 import { BsHandbag as Bag, BsHeart as Wishlist } from "react-icons/bs"
 
 
-const Header = ({ iconSize=20 }) => {
+const Header = ({ cartSize, iconSize=20 }) => {
   return (
     <HeaderWrapper>
         <Menu className="menu" size={iconSize} />
@@ -15,7 +15,7 @@ const Header = ({ iconSize=20 }) => {
             <Wishlist className="wishlist" size={iconSize} />
             <span className="bag-container">
                 <Bag className="bag-icon" size={iconSize} />
-                <span className="bag-items">1</span>
+                <span className="bag-items">{cartSize}</span>
             </span>
         </div>
     </HeaderWrapper>
@@ -62,9 +62,9 @@ const HeaderWrapper = styled.header`
             height: 11px;
             position: absolute;
             right: 0;
-            top: -2px;
+            top: -3px;
             font-size: 8px;
-            font-weight: bold;
+            font-weight: 600;
             padding: 2px;
             border-radius: 50%;
             color: #fff;

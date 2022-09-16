@@ -5,6 +5,7 @@ const HomeWrapper = styled.section`
     flex-direction: column;
     align-items: center;
     width: min(100%, 500px);
+    margin: 0 auto;
     min-height: 100vh;
     padding: 1rem 1.5rem;
 

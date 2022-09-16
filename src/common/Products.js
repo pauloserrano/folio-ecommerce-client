@@ -6,12 +6,17 @@ const Products = ({ children }) => {
     return <ProductsWrapper>{children}</ProductsWrapper>
 }
 
-Products.Title = ({ name, iconSize=24, ...otherProps }) => {
+Products.Title = ({ name, iconSize=24, children, ...otherProps }) => {
     return (
-        <header {...otherProps}>
-            <h2 className="collection-name">{name}</h2>
-            <RightArrow size={iconSize}/>
-        </header>
+        <>
+            {children 
+            ? (<>{children}</>)
+            : (<TitleWrapper {...otherProps}>
+                    <h2 className="collection-name">{name}</h2>
+                    <RightArrow size={iconSize}/>
+                </TitleWrapper>)
+            }
+        </>
     )
 }
 
@@ -56,10 +61,6 @@ const ProductsWrapper = styled.section`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
-        margin: 0;
-        margin-bottom: 0.5rem;
-        cursor: pointer;
 
         .collection-name{
             font-size: 16px;
@@ -68,6 +69,12 @@ const ProductsWrapper = styled.section`
             text-transform: uppercase;
         }
     }
+`
+
+const TitleWrapper = styled.header`
+    width: 100%;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
 `
 
 const CardWrapper = styled.li`

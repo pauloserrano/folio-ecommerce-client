@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { TbSearch as Search } from "react-icons/tb"
 import styled from "styled-components"
 
 
@@ -6,11 +7,25 @@ const SearchBar = ({ initial='' }) => {
     const [search, setSearch] = useState(initial)
 
   return (
-    <SearchBarWrapper type="text" placeholder="Search Products" value={search} onChange={(e) => setSearch(e.target.value)} />
+    <SearchBarWrapper>
+      <input 
+        type="text" 
+        placeholder="Search Products" 
+        name="q" 
+        value={search} 
+        onChange={(e) => setSearch(e.target.value)} 
+      />
+      <button>
+        <Search size={20} />
+      </button>
+    </SearchBarWrapper>
   )
 }
 
-const SearchBarWrapper = styled.input`
+const SearchBarWrapper = styled.form`
+  position: relative;
+
+  input{
     width: 100%;
     padding: 0.5em;
     border: none;
@@ -23,6 +38,15 @@ const SearchBarWrapper = styled.input`
     &:focus{
         outline: none;
     }
+  }
+
+  button{
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
 `
 
 export default SearchBar
