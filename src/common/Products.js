@@ -20,12 +20,12 @@ Products.Title = ({ name, iconSize=24, children, ...otherProps }) => {
     )
 }
 
-Products.Card = ({ product }) => {
+Products.Card = ({ product, ...otherProps }) => {
     const { title, author, price, image } = product
 
     return (
-        <CardWrapper>
-            <img src={image || "https://p4.wallpaperbetter.com/wallpaper/33/261/282/5bd28eeaec175-wallpaper-preview.jpg"} alt="mock" />
+        <CardWrapper {...otherProps}>
+            <img src={image || "https://p4.wallpaperbetter.com/wallpaper/33/261/282/5bd28eeaec175-wallpaper-preview.jpg"} alt={title} />
             <div>
                 <h2>{title}</h2>
                 <h3>{author}</h3>

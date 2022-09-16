@@ -2,9 +2,12 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { RiMenu2Line as Menu } from "react-icons/ri"
 import { BsHandbag as Bag, BsHeart as Wishlist } from "react-icons/bs"
+import useGlobalContext from "../hooks/useGlobalContext"
 
 
-const Header = ({ cartSize, iconSize=20 }) => {
+const Header = ({ iconSize=20 }) => {
+    const { cart } = useGlobalContext()
+
   return (
     <HeaderWrapper>
         <Menu className="menu" size={iconSize} />
@@ -15,7 +18,7 @@ const Header = ({ cartSize, iconSize=20 }) => {
             <Wishlist className="wishlist" size={iconSize} />
             <span className="bag-container">
                 <Bag className="bag-icon" size={iconSize} />
-                <span className="bag-items">{cartSize}</span>
+                <span className="bag-items">{cart.length}</span>
             </span>
         </div>
     </HeaderWrapper>
