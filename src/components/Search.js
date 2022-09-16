@@ -23,17 +23,18 @@ const Search = () => {
       <main>
         <SearchBar />
         {books.length > 0
-          ? books.map((book, id) => (
-            <Products key={id}>
-                <Products.Searched>
+          ? <Products>
+              <Products.Searched>
+                {books.map((book, id) => (
                   <Products.Card 
-                      key={id} 
+                      key={id}
                       product={book} 
                       onClick={() => navigate(`/`)} 
                   />
-                </Products.Searched>
-            </Products>
-        ))
+              ))}
+            </Products.Searched>
+          </Products>
+          
           : <>Loading</>
         }
       </main>
