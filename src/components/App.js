@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalContextProvider } from "../context/GlobalContext";
-import { GlobalStyle, Fonts } from "../styles";
+import { GlobalStyle } from "../styles";
 import ProductPage from "./ProductPage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Fonts />
       <GlobalContextProvider>
           <Routes>
             <Route path="/" element={<>Home</>}></Route>

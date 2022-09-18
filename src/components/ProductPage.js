@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Styled from 'styled-components';
 
 import { individualProduct } from '../services/axios';
@@ -12,8 +11,43 @@ const ProductPage = () => {
     // Logic
     const { PRODUCT_ID } = useParams();
 
+    const addToCart = () => {
+
+        // creating cart representation
+        if(localStorage.getItem("cart") === null) localStorage.setItem("cart", '[]');
+        const cart = JSON.parse(localStorage.getItem("cart"));
+
+        // add the new product with the right amount
+        let amount = 1;
+        for(let i = 0; i < cart.length; i++) {
+            if(cart[i].id === PRODUCT_ID) {
+                amount = cart[i].amount + 1;
+                cart[i].amount = amount;
+            }
+        }
+        if(amount === 1) {
+            const cartItem = { 
+                price: product.price,
+                img: product.img,
+                title: product.title,
+                id: PRODUCT_ID,
+                amount
+            };
+            cart.push(cartItem);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart)); // save updated cart
+        console.log(cart)
+        
+        // Message
+        const message = (amount === 1) ? `${product.title} added to your cart` : `${amount} ${product.title} on the cart`;
+        alert(message);
+    }
+
+    const checkoutNow = click => {
+
+    }
+
     useEffect(() => {
-        console.log(PRODUCT_ID)
         const loadData = async (id) => {
             try {
                 const getProduct = await individualProduct({id});
@@ -35,18 +69,26 @@ const ProductPage = () => {
                 <ProductStyles>
                     <Cover>
                         <img src={ product.img } alt='Book cover' />
+                        <Link to="/"><div className='back'><ion-icon name="return-left"></ion-icon></div></Link>
+                        <div onClick={() => alert("Wishlist still under development")} className='heart'><ion-icon styles={'font-size: 2rem;'} name="heart-empty"></ion-icon></div>
                     </Cover>
                     <Info>
                         <MainInfo>
                             <h1>{ product.title }</h1>
-                            <span>${ product.price }</span>
+                            <span>${ product.price.toFixed(2) }</span>
                         </MainInfo>
                         <Descriptions>
                             <h3>From: { product.from }</h3>
-                            <h2>Description</h2>
+                            <h3>Category: { product.category }</h3>
+                            <h2>DESCRIPTION</h2>
                             <p>{ product.description }</p>
+                            <div className='space' ></div>
                         </Descriptions>
                     </Info>
+                    <Footer>
+                        <button onClick={ click => addToCart(click) } className='bag'>add to cart</button>
+                        <button onClick={ click => checkoutNow(click) } className='buy'>buy now</button>
+                    </Footer>
                 </ProductStyles> 
                     : 
                 <>Loading</> 
@@ -56,34 +98,98 @@ const ProductPage = () => {
     )
 }
 
+const Footer = Styled.div`
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 1.3rem;
+    left: 0;
+
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+    
+    button {
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        width: 47.5%;
+        height: 3.3rem;
+    }
+
+    .bag {
+        color: #000;
+        background-color: #fff;
+        border: 0.03px solid #000;
+    }
+
+    .buy {
+        border: none;
+        background-color: #000;
+        color: #fff;
+
+    }
+    
+`;
+
 const Descriptions = Styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     h3 {
         font-weight: bold;
         font-size: 1rem;
+        color: #171717;
     }
     
     h2 {
             font-weight: bold;
-            font-size: 1.2rem;
-            margin:0.8rem 0 0.4rem 0;
+            font-size: 1rem;
+            margin: 1.8rem 0 0.8rem 0;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            color: #171717;
 
         }
 
+        p {
+            text-transform: capitalize;
+            color: #575757;
+            line-height: 149%;
+        }
+
+        .space {
+            height: 5.3rem;
+        }
 `;
 
 const Info = Styled.div`
-    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;400;700&display=swap');
-    font-family: 'Nunito Sans', sans-serif;
-    margin: 0 1rem;
+        padding: 0 1rem;
 `;
 
-const Cover = Styled.div``;
+const Cover = Styled.div`
+    position: relative;
+    ion-icon {
+        position: absolute;
+        top: 1rem;
+        font-size: 2rem;
+        z-index: 1;
+        color: white;
+    }
+    .back > ion-icon {
+        left: 1.2rem;
+    }
+
+    .heart > ion-icon {
+        right: 1.2rem;
+    }
+`;
 
 const MainInfo = Styled.div`
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: space-between;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1.6rem;
     margin: 1.4rem 0 1rem 0;
     
@@ -91,6 +197,7 @@ const MainInfo = Styled.div`
 
     @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;400;700&display=swap');
     font-family: 'Nunito Sans';
+    text-transform: capitalize;
     }
 `;
 
