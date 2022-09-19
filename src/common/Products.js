@@ -21,14 +21,14 @@ Products.Title = ({ name, iconSize=24, children, ...otherProps }) => {
 }
 
 Products.Card = ({ product, ...otherProps }) => {
-    const { title, author, price, image } = product
+    const { title, from, price, img } = product
 
     return (
         <CardWrapper {...otherProps}>
-            <img src={image || "https://p4.wallpaperbetter.com/wallpaper/33/261/282/5bd28eeaec175-wallpaper-preview.jpg"} alt={title} />
+            <img src={img || "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png"} alt={title} />
             <div>
                 <h2>{title}</h2>
-                <h3>{author}</h3>
+                <h3>{from}</h3>
                 <p>R${price}</p>
             </div>
         </CardWrapper>

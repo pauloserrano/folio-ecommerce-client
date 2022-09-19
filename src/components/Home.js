@@ -4,7 +4,9 @@ import { HomeWrapper } from "../styles"
 import Products from "../common/Products"
 import Header from "../common/Header"
 import SearchBar from "../common/SearchBar"
-import { getProducts } from "../services/mockData"
+// import { getProducts } from "../services/mockData"
+import { getProducts } from "../services/axios"
+import Spinner from "../common/Spinner"
 
 
 const Home = () => {
@@ -12,8 +14,11 @@ const Home = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        const categories = getProducts()
-        setCategories(categories)
+        getProducts().then(({ data }) => {
+            console.log(data)
+            setCategories(data)
+        })
+
     }, [])
 
   return (
@@ -22,24 +27,24 @@ const Home = () => {
         <main>
             <SearchBar />
             {categories.length > 0
-            ? categories.map(({ name, products }, id) => (
+            ? categories.map(({ category, products }, id) => (
                 <Products key={id}>
                     <Products.Title 
-                        name={name} 
-                        onClick={() => navigate(`/${name.toLowerCase()}`, {state: {name}})} 
+                        name={category} 
+                        onClick={() => navigate(`/${category.toLowerCase()}`, { state: { category, products }})} 
                     />
                     <Products.Showcase>
                         {products?.map((product, id) => (
                             <Products.Card 
                                 key={id} 
                                 product={product} 
-                                onClick={() => navigate(`/`)} 
+                                onClick={() => navigate(`/products/${product._id}`)} 
                             />
                         ))}
                     </Products.Showcase>
                 </Products>
             ))
-            : <>Loading</>
+            : <Spinner />
             }
         </main>
     </HomeWrapper>

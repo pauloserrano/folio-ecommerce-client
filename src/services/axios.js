@@ -12,4 +12,8 @@ const signUp = ({ name, email, password }) => {
     return api.post('/signup', { name, email, password })
 }
 
-export { signIn, signUp }
+const getProducts = () => {
+    return api.get('/products')
+}
+
+export { signIn, signUp, getProducts }
