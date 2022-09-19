@@ -12,8 +12,18 @@ const signUp = ({ name, email, password }) => {
     return api.post('/signup', { name, email, password })
 }
 
+const individualProduct = ({ id }) => {
+    return api.get(`/products/${id}`);
+}
+
+const checkout = ({ userId, products, token }) => {
+    const body = { products };
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    return api.post(`/checkout/${userId}`, { products }, { headers: { Authorization: `Bearer ${token}` } });
+}
+
 const getProducts = () => {
     return api.get('/products')
 }
 
-export { signIn, signUp, getProducts }
+export { signIn, signUp, getProducts, individualProduct, checkout }
