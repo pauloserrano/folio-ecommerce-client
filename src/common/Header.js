@@ -16,10 +16,12 @@ const Header = ({ iconSize=20 }) => {
         </h1>
         <div>
             <Wishlist className="wishlist" size={iconSize} />
+            <Link to="/cart" >
             <span className="bag-container">
                 <Bag className="bag-icon" size={iconSize} />
                 <span className="bag-items">{cart.length}</span>
             </span>
+            </Link>
         </div>
     </HeaderWrapper>
   )

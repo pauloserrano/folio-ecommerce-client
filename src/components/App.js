@@ -6,6 +6,7 @@ import Home from "./Home";
 import CategoryPage from "./CategoryPage"
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Cart from "./Cart.js";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/checkout" element={<></>}></Route>
             <Route path="/products/:PRODUCT_ID" element={ <ProductPage /> }></Route>
+            <Route path="/cart" element={ <Cart /> }></Route>
           </Routes>
       </GlobalContextProvider>
     </BrowserRouter>

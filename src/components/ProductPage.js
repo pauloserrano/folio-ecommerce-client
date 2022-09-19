@@ -54,7 +54,7 @@ const ProductPage = () => {
             const products = JSON.parse(localStorage.getItem("cart"));
             // request
             const order = await checkout({ userId, products, token });
-            localStorage.removeItem("cart");
+            localStorage.setItem("cart", '[]');
             alert("Order sent successfully!")
         } catch (error) {
             console.log(error)
