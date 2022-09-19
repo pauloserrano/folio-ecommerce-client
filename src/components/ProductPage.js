@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import Styled from 'styled-components';
 
-import { individualProduct } from '../services/axios';
+import { individualProduct, checkout } from '../services/axios';
 
 const ProductPage = () => {
     // State Variables
@@ -10,6 +10,8 @@ const ProductPage = () => {
 
     // Logic
     const { PRODUCT_ID } = useParams();
+
+    const navigate = useNavigate();
 
     const addToCart = () => {
 
@@ -43,8 +45,24 @@ const ProductPage = () => {
         alert(message);
     }
 
-    const checkoutNow = click => {
-
+    const checkoutNow = async () => {
+        if(localStorage.getItem("userId") === null) navigate("/signIn");
+        try {
+            // request data 
+            const userId = localStorage.getItem("userId");
+            const token = localStorage.getItem("token");
+            const products = JSON.parse(localStorage.getItem("cart"));
+            // request
+            const order = await checkout({ userId, products, token });
+            localStorage.removeItem("cart");
+            alert("Order sent successfully!")
+        } catch (error) {
+            console.log(error)
+            if(error.status == 500) {
+                alert("Internal issue, please try again later.");
+            } else alert("Desconnected");
+            navigate("/signin");
+        }
     }
 
     useEffect(() => {
@@ -86,8 +104,8 @@ const ProductPage = () => {
                         </Descriptions>
                     </Info>
                     <Footer>
-                        <button onClick={ click => addToCart(click) } className='bag'>add to cart</button>
-                        <button onClick={ click => checkoutNow(click) } className='buy'>buy now</button>
+                        <button onClick={ click => addToCart() } className='bag'>add to cart</button>
+                        <button onClick={ click => checkoutNow() } className='buy'>buy now</button>
                     </Footer>
                 </ProductStyles> 
                     : 
